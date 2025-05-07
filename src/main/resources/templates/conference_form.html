@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+ <title>Nouvelle conférence</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ <link rel="stylesheet" href="../form.css">
+ <link rel="icon" type="image/png" href="../black-jack-sans-raison.png" />
+</head>
+<body>
+    <div class="container">
+
+        <h1>Créer une nouvelle conférence</h1>
+        <form action="/conferences/insert" method="post">
+            <label for="titreConf">Titre de la conférence :</label>
+            <input type="text" id="titreConf" name="titreConf" required>
+        
+            <label for="numEditionConf">Numéro d'édition :</label>
+            <input type="number" id="numEditionConf" name="numEditionConf" required max="999999999">
+        
+            <label for="dtDebutConf">Date de début :</label>
+            <input type="date" id="dtDebutConf" name="dtDebutConf" required>
+        
+            <label for="dtFinConf">Date de fin :</label>
+            <input type="date" id="dtFinConf" name="dtFinConf" required>
+        
+            <label for="urlSiteWebConf">URL du site web :</label>
+            <input type="url" id="urlSiteWebConf" name="urlSiteWebConf" required>
+        
+            <label for="fraisInscriptionConf">Frais d'inscription (€) :</label>
+            <input type="number" id="fraisInscriptionConf" name="fraisInscriptionConf" required max="999999999">
+
+            <label for="thematiques">Thématiques :</label>
+            <th:block th:each="thematique : ${thematiques}">
+                <input type="checkbox" th:id="${thematique.codeThematique}" th:name="thematiques" th:value="${thematique.codeThematique}"> 
+                <span th:text="${thematique.nomThematique}"></span>
+            </th:block>
+        
+            <label for="activites">Activités :</label>
+            <th:block th:each="activite : ${activites}">
+                <input type="checkbox" th:id="${activite.codeActivite}" th:name="activites" th:value="${activite.codeActivite}"> 
+                <span th:text="${activite.nomActivite}"></span>
+            </th:block>
+        
+            <button type="submit">Créer la conférence</button>
+        </form>        
+        
+        <a href="/index">← Retour à l'accueil</a>
+    </div>
+
+    <!-- petit js pour juste empêcher la soumission si aucune activtés ou thématiques cochées -->
+    <script>
+        document.querySelector("form").addEventListener("submit", function(event) {
+            const thematiques = document.querySelectorAll("input[name='thematiques']:checked");
+            const activites = document.querySelectorAll("input[name='activites']:checked");
+            
+            if (thematiques.length === 0) {
+                alert("Veuillez sélectionner au moins une thématique.");
+                event.preventDefault();
+            } else if (activites.length === 0) {
+                alert("Veuillez sélectionner au moins une activité.");
+                event.preventDefault();
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+ <title>Nouveau participant</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ <link rel="stylesheet" href="../form.css">
+ <link rel="icon" type="image/png" href="../black-jack-sans-raison.png" />
+</head>
+<body>
+    <div class="container">
+        <h1>Créer un compte participant</h1>
+        <form action="/participants/insert" method="get">
+
+            <div class="form-group">
+                <label for="nomPart">Nom :</label>
+                <input type="text" id="nomPart" name="nomPart" required>
+            </div>
+
+            <div class="form-group">
+                <label for="prenomPart">Prénom :</label>
+                <input type="text" id="prenomPart" name="prenomPart" required>
+            </div>
+
+            <div class="form-group">
+                <label for="organismePart">Organisme :</label>
+                <input type="text" id="organismePart" name="organismePart" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cpPart">Code Postal :</label>
+                <input type="number" id="cpPart" name="cpPart" required max="999999999">
+            </div>
+
+            <div class="form-group">
+                <label for="adrPart">Adresse :</label>
+                <input type="text" id="adrPart" name="adrPart" required>
+            </div>
+
+            <div class="form-group">
+                <label for="villePart">Ville :</label>
+                <input type="text" id="villePart" name="villePart" required>
+            </div>
+
+            <div class="form-group">
+                <label for="paysPart">Pays :</label>
+                <input type="text" id="paysPart" name="paysPart" required>
+            </div>
+
+            <div class="form-group">
+                <label for="emailPart">Email :</label>
+                <input type="email" id="emailPart" name="emailPart" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <label for="statutNom">Statut :</label>
+            <div class="statut-container">
+                <div th:each="statut : ${statuts}" class="statut-item">
+                    <input type="radio" th:id="${statut.codeStatut}" th:name="statutNom" th:value="${statut.nomStatut}" required>
+                    <label th:for="${statut.codeStatut}" th:text="${statut.nomStatut}"></label>
+                </div>
+            </div>
+
+            <input type="submit" value="Créer le participant">
+        </form>
+        
+        <a href="/index">← Retour à l'accueil</a>
+    </div>
+</body>
+</html>

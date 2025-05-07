@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+ <title>Liste des participants</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ <link rel="stylesheet" href="../list.css">
+ <link rel="icon" type="image/png" href="../black-jack-sans-raison.png" />
+</head>
+<body>
+    
+    <h1>Liste des participants</h1>
+    <table border="1">
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Organisme</th>
+            <th>Code Postal</th>
+            <th>Adresse</th>
+            <th>Ville</th>
+            <th>Pays</th>
+            <th>Email</th>
+            <th>Date d'inscription</th>
+            <th>Statut</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each="participant : ${participants}">
+            <td th:text="${participant.nomPart}"></td>
+            <td th:text="${participant.prenomPart}"></td>
+            <td th:text="${participant.organismePart}"></td>
+            <td th:text="${participant.cpPart}"></td>
+            <td th:text="${participant.adrPart}"></td>
+            <td th:text="${participant.villePart}"></td>
+            <td th:text="${participant.paysPart}"></td>
+            <td th:text="${participant.emailPart}"></td>
+            <td th:text="${participant.dtInscription}"></td>
+            <td th:text="${participant.statut.nomStatut}"></td>
+            <td>
+                <a id="actions-buttons" th:href="@{/participants/edit/{id}(id=${participant.codeParticipant})}">Modifier</a>
+            </td>
+        </tr>
+    </table>
+
+    <a href="/participants/new">Créer un compte participant</a>
+    <a href="/index">Accueil</a>
+</body>
+</html>

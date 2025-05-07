@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+ <title>Confirmation</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ <link rel="stylesheet" href="../../confirmation.css">
+ <link rel="icon" type="image/png" href="../../black-jack-sans-raison.png" />
+</head>
+<body>
+
+    <div class="confirmation-message">
+
+        <h1>Confirmation de la modification du participant :</h1>
+        <p>Nom: <span th:text="${participant.nomPart}"></span></p>
+        <p>Prénom: <span th:text="${participant.prenomPart}"></span></p>  
+        <p>Organisme: <span th:text="${participant.organismePart}"></span></p>
+        <p>Code Postal: <span th:text="${participant.cpPart}"></span></p>
+        <p>Adresse: <span th:text="${participant.adrPart}"></span></p>
+        <p>Ville: <span th:text="${participant.villePart}"></span></p>
+        <p>Pays: <span th:text="${participant.paysPart}"></span></p>
+        <p>Statut: <span th:text="${participant.statut.nomStatut}"></span></p>
+    </div>
+
+    <a href="/index" class="back-home">Accueil</a>
+</body>
+</html>

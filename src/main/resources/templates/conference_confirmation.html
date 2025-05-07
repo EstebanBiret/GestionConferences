@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Confirmation de la conférence</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="../confirmation.css">
+        <link rel="icon" type="image/png" href="../black-jack-sans-raison.png" />
+    </head>
+    <body>
+
+    <div class="confirmation-message">
+
+        <h1>Confirmation de création de la conférence :</h1>
+        <p>Titre : <span th:text="${conference.titreConf}"></span></p>
+        <p>Numéro de l'édition : <span th:text="${conference.numEditionConf}"></span></p>
+        <p>Date de début : <span th:text="${conference.dtDebutConf}"></span></p>
+        <p>Date de fin : <span th:text="${conference.dtFinConf}"></span></p>
+        <p>Site Web : <span th:text="${conference.urlSiteWebConf}"></span></p>
+        <p>Frais d'inscription : <span th:text="|${conference.fraisInscriptionConf}€|"></span></p>
+
+        <h3>Thématique(s) :</h3>
+        <ul>
+            <li th:each="thematique : ${thematiques}" th:text="${thematique.nomThematique}"></li>
+        </ul>
+
+        <h3>Activité(s) :</h3>
+        <ul>
+            <li th:each="activite : ${activites}" th:text="${activite.nomActivite}"></li>
+        </ul>
+
+    </div>
+
+    <a href="/index" class="back-home">Retour à l'accueil</a>
+    </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Mes inscriptions</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="../list.css">
+        <link rel="icon" type="image/png" href="../black-jack-sans-raison.png" />
+    </head>
+    <body>
+
+        <h1>Mes inscriptions</h1>
+
+        <table border="1">
+            <tr>
+                <th>Conférence</th>
+                <th>Dates</th>
+                <th>Thématiques choisies</th>
+                <th>Activités choisies</th>
+                <th>Prix total</th>
+            </tr>
+            <tr th:each="conf : ${conferences}">
+                <td th:text="${conf.titreConf} + ' (édition ' + ${conf.numEditionConf} + ')'"></td>
+                <td>
+                    <span th:text="'Du ' + ${conf.dtDebutConf} + ' au ' + ${conf.dtFinConf}"></span>
+                </td>
+                <td>
+                    <ul>
+                        <li th:each="t : ${thematiquesParConf[conf.codeConf]}" th:text="${t.nomThematique}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li th:each="a : ${activitesParConf[conf.codeConf]}"
+                            th:text="${a.nomActivite} + ' (' + ${a.prixActivite} + ' €)'"></li>
+                    </ul>
+                </td>
+                <td>
+                    <span th:text="${prixTotalParConf[conf.codeConf]} + ' €'"></span>
+                </td>
+            </tr>
+        </table>
+
+        <a href="/index">Retour à l'accueil</a>
+
+    </body>
+</html>

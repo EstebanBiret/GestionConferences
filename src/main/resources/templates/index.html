@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" type="image/png" href="black-jack-sans-raison.png" />
+    <title>Conférences malignes</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenue sur le site des conférences malignes !</h1>
+        <p>Ce site est dédié à la gestion des conférences malignes.</p>
+        <p>Pour plus d'informations, veuillez consulter la documentation (qui est inexistante).</p>
+        <hr>
+        <p>Pour vous inscrire à une conférence ou consulter vos inscriptions, veuillez vous connecter.</p>
+
+        <ul>
+            <li><a href="/participants/new">Créer un participant</a></li>
+            <li><a href="/participants/list">Liste des participants</a></li>
+            <li><a href="/conferences/new">Créer une conférence</a></li>
+            <li>
+                <a href="/conferences/list"
+                    th:text="${session.participant != null} ? 'Liste des conférences / S\'inscrire' : 'Liste des conférences'">
+                    Liste des conférences
+                </a>
+            </li>
+            <li>
+                <a th:href="${session.participant != null} ? '/conferences/inscriptions' : '#'" 
+                th:classappend="${session.participant == null} ? 'disabled'" 
+                title="Connectez-vous pour accéder">
+                Consultation des inscriptions
+                </a>
+            </li>
+        </ul>
+
+        <div th:if="${session.participant}">
+            <p>Bonjour, <span th:text="${session.participant.prenomPart}"></span>
+            <span th:text="${session.participant.nomPart}"></span> !</p>
+            <a href="/participants/deconnect">Se déconnecter</a>
+        </div>
+
+        <div th:unless="${session.participant}">
+            <p>Veuillez vous connecter :</p>
+
+            <div th:if="${error}" style="color: red;">
+                <p th:text="${error}"></p>
+            </div>
+
+            <form th:action="@{/participants/connect}" method="post">
+                <input type="text" id="email" name="email" placeholder="Email" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <button type="submit">Se connecter</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

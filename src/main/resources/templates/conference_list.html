@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <title>Liste des conférences</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../list.css">
+    <link rel="icon" type="image/png" href="../black-jack-sans-raison.png" />
+    </head>
+    <body>
+        <h1>Liste des conférences</h1>
+        <table border="1">
+            <tr>
+                <th>Titre</th>
+                <th>Numéro d'édition</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Site Web</th>
+                <th>Frais d'inscription</th>
+                <th>Thématique(s)</th>
+                <th>Activité(s)</th>
+                <th th:if="${session.participant}">Actions</th>
+
+            </tr>
+            <th:block th:each="conference : ${conferences}">
+                <tr>
+                    <td th:text="${conference.titreConf}"></td>
+                    <td th:text="${conference.numEditionConf}"></td>
+                    <td th:text="${conference.dtDebutConf}"></td>
+                    <td th:text="${conference.dtFinConf}"></td>
+                    <td th:text="${conference.urlSiteWebConf}"></td>
+                    <td th:text="${conference.fraisInscriptionConf}"></td>
+                    <td>
+                        <ul>
+                            <li th:each="thematique : ${conference.thematiques}" th:text="${thematique.nomThematique}"></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li th:each="activite : ${conference.activites}" th:text="${activite.nomActivite}"></li>
+                        </ul>
+                    </td>
+
+                    <!-- On affiche le bouton d'inscription uniquement si l'utilisateur est connecté et n'est pas déjà inscrit -->
+                    <td th:if="${session.participant}">
+                        <div th:if="${conferenceIdsInscrites.contains(conference.codeConf)}">
+                            <a class="green">Inscrit</a>
+                        </div>
+                        <div th:unless="${conferenceIdsInscrites.contains(conference.codeConf)}">
+                            <a id="actions-buttons" th:href="@{/conferences/inscription/{id}(id=${conference.codeConf})}">S'inscrire</a>
+                        </div>
+                    </td>
+
+                </tr>
+            </th:block>
+        </table>
+        <a href="/conferences/new">Créer une nouvelle conférence</a>
+        <a href="/index">Accueil</a>
+    </body>
+</html>

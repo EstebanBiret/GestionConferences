@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Inscription à une conférence</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="../../form.css">
+        <link rel="icon" type="image/png" href="../../black-jack-sans-raison.png" />
+    </head>
+    <body>
+        <div class="container">
+            <h1 th:text="'Inscription à la conférence : ' + ${conference.titreConf} + ' (édition ' + ${conference.numEditionConf} + ')'"></h1>
+
+            <form th:action="@{/conferences/inscription/{id}/confirmation(id=${conference.codeConf})}" method="post">
+
+                <div class="form-group rhubarbe">
+                    <label>Choisissez vos activités :</label>
+                    <div th:each="a : ${activites}" class="checkbox-item">
+                        <input type="checkbox" name="activiteIds" th:value="${a.codeActivite}" th:id="'activite-' + ${a.codeActivite}">
+                        <label th:for="'activite-' + ${a.codeActivite}" 
+                            th:text="${a.nomActivite + ' (' + a.prixActivite + '€)'}"></label>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group rhubarbe">
+                    <label>Choisissez vos thématiques :</label>
+                    <div th:each="t : ${thematiques}" class="checkbox-item">
+                        <input type="checkbox" name="thematiqueIds" th:value="${t.codeThematique}" th:id="'thematique-' + ${t.codeThematique}">
+                        <label th:for="'thematique-' + ${t.codeThematique}" 
+                            th:text="${t.nomThematique}"></label>
+                    </div>
+                </div>
+
+                <div class="form-group rhubarbe">
+                    <button type="submit">Valider</button>
+                </div>
+            </form>
+
+            <a href="/conferences/list">← Retour à la liste des conférences</a>
+        </div>
+
+        <!-- petit js pour juste empêcher la soumission si aucune activités ou thématiques cochées -->
+        <script>
+            document.querySelector("form").addEventListener("submit", function(event) {
+                const activites = document.querySelectorAll("input[name='activiteIds']:checked");
+                const thematiques = document.querySelectorAll("input[name='thematiqueIds']:checked");
+                
+                if (activites.length === 0) {
+                    alert("Veuillez sélectionner au moins une activité.");
+                    event.preventDefault();
+                } else if (thematiques.length === 0) {
+                    alert("Veuillez sélectionner au moins une thématique.");
+                    event.preventDefault();
+                }
+            });
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Confirmation de l'inscription</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="../../../confirmation.css">    
+        <link rel="icon" type="image/png" href="../../../black-jack-sans-raison.png" />
+    </head>
+    <body>
+        <div class="confirmation-message">
+
+            <h1>Confirmation d'inscription à la conférence :</h1>
+            <p><strong>Titre :</strong> <span th:text="${conference.titreConf}"></span></p>
+            <p><strong>Édition :</strong> <span th:text="${conference.numEditionConf}"></span></p>
+            <p><strong>Date :</strong> 
+                <span th:text="${conference.dtDebutConf}"></span> → 
+                <span th:text="${conference.dtFinConf}"></span>
+            </p>
+            <p><strong>Site Web :</strong> <a th:href="${conference.urlSiteWebConf}" th:text="${conference.urlSiteWebConf}" target="_blank"></a></p>
+            <p><strong>Frais de base :</strong> <span th:text="|${conference.fraisInscriptionConf}€|"></span></p>
+            <p><strong>Prix des activités choisies :</strong> <span th:text="|${prixTotal}€|"></span></p>
+            <p><strong>Prix total :</strong> <span th:text="|${conference.fraisInscriptionConf + prixTotal}€|"></span></p>
+
+            <h3>Thématique(s) sélectionnée(s) :</h3>
+            <ul>
+                <li th:each="thematique : ${thematiques}" th:text="${thematique.nomThematique}"></li>
+            </ul>
+
+            <h3>Activité(s) sélectionnée(s) :</h3>
+            <ul>
+                <li th:each="activite : ${activites}" th:text="${activite.nomActivite}"></li>
+            </ul>
+
+            <div class="action-buttons">
+                <form th:action="@{/conferences/inscription/{id}/valider(id=${conference.codeConf})}" method="post" style="display:inline;">
+                    <input type="hidden" th:name="thematiqueIds" th:each="t : ${thematiques}" th:value="${t.codeThematique}">
+                    <input type="hidden" th:name="activiteIds" th:each="a : ${activites}" th:value="${a.codeActivite}">
+                    <button type="submit" class="confirm-button">Valider l'inscription</button>
+                </form>
+
+                <a th:href="@{/conferences/list}" class="back-home">Annuler</a>
+            </div>
+
+        </div>
+    </body>
+</html>
